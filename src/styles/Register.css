@@ -1,0 +1,83 @@
+/* src/styles/Register.css */
+
+/* Ajustes gerais */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #002060; /* Azul marinho */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Preenche a altura total da tela */
+    margin: 0;
+    padding: 0;
+}
+
+/* Painel de Registro */
+.register-container {
+    background-color: #ffffff; /* Fundo branco */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 450px; /* Aumenta a largura máxima do painel */
+    width: 100%; /* O painel ocupa 100% da largura disponível */
+}
+
+/* Título da Página */
+.page-title {
+    text-align: center;
+    color: #ffffff; /* Cor branca */
+    font-size: 2.2em;
+    margin-bottom: 20px;
+}
+
+/* Título do Formulário */
+h2 {
+    text-align: center;
+    color: #002060; /* Azul marinho */
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaçamento entre os elementos */
+}
+
+/* Campos do formulário */
+input, select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px; /* Aumenta a largura dos campos */
+    box-sizing: border-box; /* Inclui padding e border no tamanho do input */
+    margin: 5px; /* Centraliza os campos */
+}
+
+input:focus, select:focus {
+    border-color: #002060; /* Azul marinho ao focar */
+    outline: none;
+}
+
+/* Botão de Rejeição e aprovação*/
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4da8da; /* Azul claro */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    max-width: 400px; /* Ajusta a largura do botão */
+    margin: 0 auto; /* Centraliza o botão */
+    
+}
+
+button:hover {
+    background-color: #398fb6; /* Azul mais escuro */
+}

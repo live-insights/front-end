@@ -1,0 +1,14 @@
+/* src/styles/responsive.css */
+@media (max-width: 768px) {
+    .navbar ul {
+      flex-direction: column;
+    }
+  
+    .navbar ul li {
+      margin: 10px 0;
+    }
+  
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }

@@ -1,0 +1,46 @@
+/* src/styles/forms.css */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #f7f9fc; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px; 
+    margin: 40px auto; 
+  }
+  
+  input, select, textarea {
+    width: 100%; 
+    max-width: 350px; 
+    padding: 8px 12px; 
+    margin: 0 auto; 
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    border-color: #4da8da;
+    outline: none;
+  }
+  
+  button {
+    width: 100%; /* Botão ocupa toda a largura disponível */
+    max-width: 350px; /* Limita a largura do botão */
+    margin: 10px auto; /* Centraliza o botão */
+    background-color: #4da8da; 
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #398fb6; 
+  }
+  
