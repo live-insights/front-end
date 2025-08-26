@@ -22,12 +22,11 @@ Bem-vindo ao **Live Insights App**! 😎
 
 A página vai recarregar automaticamente quando fizer mudanças. 
 
-## 🔑 Admin Base 
+## 🔑 Criando usuário pela primeira vez
 
-Quando você rodar o BackEnd, um usuário com perfil administrador será criado automaticamente:
+Quando você rodar o BackEnd, você deverá criar um usuário através do Swagger na rota register.
 
-- Usuário: `admin`
-- Senha: `admin`
+<img width="1270" height="388" alt="image" src="https://github.com/user-attachments/assets/d674acb7-02ed-4a42-91fc-65d14fff2392" />
 
 ## BackEnd
 
