@@ -12,7 +12,7 @@ const Login = () => {
   useEffect(() => {
     if (user) {
       navigate('/client/catalog');
-    }
+    } 
   }, [user, navigate]);
 
   const handleSubmit = async (e) => {
