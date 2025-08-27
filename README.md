@@ -1,3 +1,5 @@
+![Auto Assign](https://github.com/live-insights/front-end/actions/workflows/auto-assign.yml/badge.svg)
+
 # 📊 Live Insights App 
 
 Bem-vindo ao **Live Insights App**! 😎
