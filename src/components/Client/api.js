@@ -3,41 +3,33 @@ import { apiRequest } from '../../utils/request';
 
 const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8090';
 
-// ========== VEHICLE SEARCH API ==========
-const fetchAnalysisGrid = async ({
-  startDate = new Date(Date.now() + 60 * 60 * 1000), // 1 hour from now
-  endDate = new Date(Date.now() + 60 * 60 * 1000 + 30 * 24 * 60 * 60 * 1000), // +1 month
-  fuelType,
-  startYear,
-  endYear,
-  category,
-  page = 0,
-  size = 10,
-} = {}) => {
-  try {
-    const requestBody = {
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      ...(fuelType && { fuelType }),
-      ...(startYear && { startYear }),
-      ...(endYear && { endYear }),
-      ...(category && { category }),
-    };
-
-    const queryParams = new URLSearchParams({ page, size }).toString();
-    const response = await apiRequest(`${BASE_URL}/rentals/available?${queryParams}`, 'POST', requestBody);
-    console.log(response)
-    return response; 
-  } catch (error) {
-    console.error("fetchAnalysisGrid error:", error);
-    return { content: [], totalPages: 0 };
-  }
+export const fetchTags = async () => {
+  const res = await apiRequest(`${BASE_URL}/tags`, 'GET');
+  return res;
 };
 
-const fetchItemImages = (vehicleId) =>
-  apiRequest(`${BASE_URL}/vehicle-images/vehicle/${vehicleId}`);
+export const fetchLives = async () => {
+  const res = await apiRequest(`${BASE_URL}/lives`, 'GET');
+  return res;
+};
 
-export {
-  fetchAnalysisGrid,
-  fetchItemImages
+export const createLive = async ({ liveId, title, tagName }) => {
+  return await apiRequest(`${BASE_URL}/lives`, 'POST', { liveId, title, tagName });
+};
+
+export const updateLiveTitle = async (id, title) => {
+  return await apiRequest(`${BASE_URL}/lives/${id}`, 'PUT', { title });
+};
+
+export const updateLiveTag = async (id, tagName) => {
+  return await apiRequest(`${BASE_URL}/lives/${id}/tag`, 'PUT', { tagName });
+};
+
+export const deleteLiveById = async (id) => {
+  return await apiRequest(`${BASE_URL}/lives/${id}`, 'DELETE');
+};
+
+export const fetchComments = async (liveId) => {
+  const res = await apiRequest(`${BASE_URL}/comments/${liveId}`, 'GET');
+  return res;
 };

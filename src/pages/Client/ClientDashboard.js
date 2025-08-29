@@ -24,8 +24,8 @@ const ClientDashboard = () => {
         <button className="logout-button" onClick={handleLogout}>Logout</button>
         <nav className="nav-links">
           <NavLink 
-            to="/client/catalog" 
-            className={`nav-link ${isActiveRoute('/client/catalog') ? 'active-link' : ''}`} 
+            to="/client/lives" 
+            className={`nav-link ${isActiveRoute('/client/lives') ? 'active-link' : ''}`} 
           >
             Dashboard
           </NavLink>

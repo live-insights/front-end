@@ -1,33 +1,33 @@
-// src/components/Auth/Login.js
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Login = () => {
   const { login, user } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/client/lives';
 
   useEffect(() => {
     if (user) {
-      navigate('/client/catalog');
-    } 
-  }, [user, navigate]);
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, from]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const credentials = { username, password };
-
     const { success, message } = await login(credentials);
 
     if (!success) {
-      console.error("Login error: " + message)
+      console.error("Login error: " + message);
       alert(message);
-    }
-    else {
-      console.log("Login successful: " + message)
+    } else {
+      navigate(from, { replace: true });
     }
   };
 

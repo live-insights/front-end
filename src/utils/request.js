@@ -7,7 +7,7 @@ export const apiRequest = async (url, method = 'GET', body = undefined) => {
           'Accept': '*/*',
         },
         body: body ? JSON.stringify(body) : undefined,
-        withCredentials: true
+        credentials: 'include'
       });
   
       const data = await response.json();
