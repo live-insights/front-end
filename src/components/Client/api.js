@@ -18,11 +18,11 @@ export const createLive = async ({ liveId, title, tagName }) => {
 };
 
 export const updateLiveTitle = async (id, title) => {
-  return await apiRequest(`${BASE_URL}/lives/${id}`, 'PUT', { title });
+  return await apiRequestString(`${BASE_URL}/lives/${id}`, 'PUT', { title });
 };
 
 export const updateLiveTag = async (id, tagName) => {
-  return await apiRequest(`${BASE_URL}/lives/${id}/tag`, 'PUT', { tagName });
+  return await apiRequestString(`${BASE_URL}/lives/${id}/tag`, 'PUT', { tagName });
 };
 
 export const deleteLiveById = async (id) => {
