@@ -641,3 +641,25 @@ hr {
 .spinner {
   animation: spin 1s linear infinite;
 }
+
+.comments-table {
+  margin-top: 2rem;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; 
+}
+
+.comments-table th,
+.comments-table td {
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;  
+  word-break: break-word; 
+  white-space: normal;    
+}
+
+.comments-table td:nth-child(3) {
+  max-width: 400px; 
+}

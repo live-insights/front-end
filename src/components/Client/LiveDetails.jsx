@@ -349,7 +349,8 @@ const LiveDetails = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <table>
+        <div>
+        <table className="comments-table">
           <thead>
             <tr>
               <th>Horário</th>
@@ -371,6 +372,7 @@ const LiveDetails = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </section>
     </div>
   );
