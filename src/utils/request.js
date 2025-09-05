@@ -31,8 +31,8 @@ export const apiRequest = async (url, method = 'GET', body = undefined) => {
         credentials: 'include'
       });
   
-      const data = await response;
-      if (!response.ok) throw new Error(data.message || 'Erro desconhecido');
+      const data = await response.text();
+      if (!response.ok) throw new Error(data || 'Erro desconhecido');
       return data;
     } catch (error) {
       console.error(error);

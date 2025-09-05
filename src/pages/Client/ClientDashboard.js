@@ -20,7 +20,7 @@ const ClientDashboard = () => {
       <header className="header">
         <h2>Live Insights</h2>
         <ThemeToggle />
-        <p>Bem-vindo, {user?.username?.split(' ')[0]}!</p>
+        <p>Boas vindas, {user?.username?.split(' ')[0]}!</p>
         <button className="logout-button" onClick={handleLogout}>Logout</button>
         <nav className="nav-links">
           <NavLink 
