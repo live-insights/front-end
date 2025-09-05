@@ -33,3 +33,11 @@ export const fetchComments = async (liveId) => {
   const res = await apiRequest(`${BASE_URL}/comments/${liveId}`, 'GET');
   return res;
 };
+
+export const startLive = async (liveId) => {
+  return await apiRequestString(`${BASE_URL}/live/start/${liveId}`, 'POST');
+};
+
+export const stopLive = async () => {
+  return await apiRequestString(`${BASE_URL}/live/stop`, 'POST');
+};
