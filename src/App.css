@@ -1,30 +1,35 @@
 /* Theme variables */
 :root {
-  --primary: #f85b23;
-  --primary-dark: #a83a06;
-  --background: #f8fafc;
-  --card-bg: #ffffff;
-  --text: #0f172a;
-  --text-secondary: #475569;
-  --border: #e2e8f0;
-  --error: #ef4444;
-  --success: #10b981;
-  --radius: 0.5rem;
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  /* Cores baseadas no gradiente laranja-roxo do login */
+  --primary: #FF5722; /* Laranja vibrante do login */
+  --primary-dark: #E64A19; /* Laranja mais escuro */
+  --secondary: #9C27B0; /* Roxo do gradiente */
+  --background: #F8FAFC; /* Fundo claro suave */
+  --card-bg: #FFFFFF; /* Branco para cards */
+  --text: #1E293B; /* Texto escuro principal */
+  --text-secondary: #64748B; /* Texto secundário */
+  --border: #E2E8F0; /* Bordas suaves */
+  --error: #EF4444; /* Vermelho para erros */
+  --success: #10B981; /* Verde para sucesso */
+  --radius: 0.75rem; /* Bordas mais arredondadas como no login */
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --gradient-primary: linear-gradient(135deg, #FF5722 0%, #9C27B0 100%);
 }
 
-/* Dark theme */
+/* Dark theme - cores que harmonizam com o gradiente */
 [data-theme="dark"] {
-  --primary: #f4633d;
-  --primary-dark: #a83a06;
-  --background: #0c111b;
-  --card-bg: #1e293b;
-  --text: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --border: #334155;
-  --error: #ef4444;
-  --success: #10b981;
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+  --primary: #FF6B47; /* Laranja mais suave para dark */
+  --primary-dark: #E64A19; /* Laranja escuro mantido */
+  --secondary: #AB47BC; /* Roxo mais claro para dark */
+  --background: #0F1419; /* Fundo muito escuro */
+  --card-bg: #1E2328; /* Cards escuros */
+  --text: #F1F5F9; /* Texto claro */
+  --text-secondary: #94A3B8; /* Texto secundário mais claro */
+  --border: #2D3748; /* Bordas escuras */
+  --error: #F56565; /* Vermelho mais suave */
+  --success: #48BB78; /* Verde mais suave */
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
+  --gradient-primary: linear-gradient(135deg, #FF6B47 0%, #AB47BC 100%);
 }
 
 /* Theme toggle button */
@@ -32,21 +37,23 @@
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text);
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
 .theme-toggle:hover {
-  background-color: var(--card-bg);
+  background: var(--gradient-primary);
+  color: white;
   transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
 
 .theme-toggle:active {
@@ -54,8 +61,8 @@
 }
 
 .theme-icon {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
 }
 
 .header-top {
