@@ -40,35 +40,38 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
   };
 
-  const register = async (userData, adminId) => {
-    try {
-      const formattedUserData = {
-        ...userData,
-        role: userData.role.toUpperCase(),
-        adminId
-      };
-
-      const response = await axios.post('http://localhost:8090/auth/register', formattedUserData, {
+  const register = async ({ username, password }) => {
+  try {
+    const response = await axios.post(
+      'http://localhost:8090/auth/register',
+      { username, password },
+      {
         headers: {
           'Accept': '*/*',
           'Content-Type': 'application/json',
         },
-        withCredentials: true
-      });
-
-      console.log('Registration response:', response.data);
-
-      if (response.data.success) {
-        return { success: true, message: 'Usuário registrado com sucesso!' };
-      } else {
-        return { success: false, message: response.data.message || 'Erro ao registrar o usuário.' };
+        withCredentials: true,
+        validateStatus: () => true,
       }
-    } catch (error) {
-      console.error('Registration error:', error);
-      const message = error.response?.data?.message || error.message || 'Erro desconhecido';
-      return { success: false, message };
+    );
+
+    if (response.status !== 200) {
+      throw new Error(response.data || `Erro (HTTP: ${response.status})`);
     }
-  };
+
+    if (response.data.includes('sucesso')) {
+      return { success: true, message: response.data };
+    } else {
+      return { success: false, message: response.data || 'Erro ao registrar.' };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data || error.message || 'Erro desconhecido',
+    };
+  }
+};
+
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
