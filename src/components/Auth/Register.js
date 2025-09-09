@@ -5,14 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import logoLight from '../../assets/logo-light.png';
 
 const Register = () => {
-  const { register } = useAuth();
+  const { register, login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState('CLIENT');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   // Garantir que o body e html não tenham margens/padding
@@ -20,14 +18,14 @@ const Register = () => {
     // Salvar estilos originais
     const originalBodyStyle = document.body.style.cssText;
     const originalHtmlStyle = document.documentElement.style.cssText;
-    
+
     // Aplicar estilos para tela cheia
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflow = 'hidden';
     document.documentElement.style.margin = '0';
     document.documentElement.style.padding = '0';
-    
+
     // Cleanup ao desmontar o componente
     return () => {
       document.body.style.cssText = originalBodyStyle;
@@ -39,23 +37,34 @@ const Register = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    
-    const userData = { username, password, role, name, email };
+    setSuccessMessage('');
+
+    const userData = { username, password };
 
     try {
-      // Armazena o novo usuário no localStorage através da função register
       const result = await register(userData);
-      
-      if (result && result.success !== false) {
-        navigate('/login'); // Redireciona para a página de login após o registro
+
+      if (result && result.success) {
+        setSuccessMessage('Conta criada com sucesso! Entrando...');
+        setTimeout(async () => {
+          const loginResult = await login(userData);
+
+          if (loginResult.success) {
+            navigate('/client/lives');
+          } else {
+            setError('Conta criada, mas houve um problema ao fazer login.');
+          }
+
+          setIsLoading(false);
+        }, 1500);
       } else {
         setError(result?.message || 'Erro ao criar conta');
+        setIsLoading(false);
       }
     } catch (err) {
       setError('Erro ao criar conta');
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   return (
@@ -97,6 +106,7 @@ const Register = () => {
           </div>
 
           {error && <div style={styles.errorMessage}>{error}</div>}
+          {successMessage && <div style={styles.successMessage}>{successMessage}</div>}
 
           <button
             type="submit"
@@ -248,6 +258,16 @@ const styles = {
     fontSize: '14px',
     fontWeight: '500',
     border: '1px solid #F44336',
+    textAlign: 'center',
+  },
+  successMessage: {
+    padding: '12px',
+    backgroundColor: '#E5F6E5',
+    color: '#2E7D32',
+    borderRadius: '10px',
+    fontSize: '14px',
+    fontWeight: '500',
+    border: '1px solid #66BB6A',
     textAlign: 'center',
   },
   footer: { textAlign: 'center', marginTop: '32px', paddingTop: '24px', borderTop: '1px solid #E2E8F0' },
