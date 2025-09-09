@@ -1,7 +1,8 @@
 // src/components/Auth/Register.js
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import logoLight from '../../assets/logo-light.png';
 
 const Register = () => {
   const { register } = useAuth();
@@ -57,25 +58,15 @@ const Register = () => {
     setIsLoading(false);
   };
 
-  const LiveInsightsLogo = () => (
-    <div style={styles.logoContainer}>
-      <div style={styles.logoIcon}>
-        <div style={styles.bar1}></div>
-        <div style={styles.bar2}></div>
-        <div style={styles.bar3}></div>
-      </div>
-      <div style={styles.logoText}>
-        <span style={styles.logoTextMain}>live</span>
-        <span style={styles.logoTextSub}>insights</span>
-      </div>
-    </div>
-  );
-
   return (
     <div style={styles.container}>
       <div style={styles.registerCard}>
         <div style={styles.header}>
-          <LiveInsightsLogo />
+          <img
+            src={logoLight}
+            alt="Live Insights Logo"
+            style={styles.logoImage}
+          />
           <h1 style={styles.welcomeText}>Cadastre-se</h1>
           <p style={styles.subtitle}>Crie sua conta para começar</p>
         </div>
@@ -158,10 +149,16 @@ const styles = {
     margin: 0,
     overflowY: 'auto', // Permitir scroll se necessário no mobile
   },
+  logoImage: {
+    width: '140px',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
   registerCard: {
     width: '100%',
     maxWidth: '420px',
-    backgroundColor: 'white',
+    backgroundColor: '#f4f7fe',
     borderRadius: '20px',
     padding: '40px 30px',
     boxShadow: '0 20px 40px rgba(0,0,0,0.1)',

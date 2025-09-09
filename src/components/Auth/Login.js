@@ -1,7 +1,8 @@
 // src/components/Auth/Login.js
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
+import logoLight from '../../assets/logo-light.png';
 
 const Login = () => {
   const { login, user } = useAuth();
@@ -50,25 +51,15 @@ const Login = () => {
     setIsLoading(false);
   };
 
-  const LiveInsightsLogo = () => (
-    <div style={styles.logoContainer}>
-      <div style={styles.logoIcon}>
-        <div style={styles.bar1}></div>
-        <div style={styles.bar2}></div>
-        <div style={styles.bar3}></div>
-      </div>
-      <div style={styles.logoText}>
-        <span style={styles.logoTextMain}>live</span>
-        <span style={styles.logoTextSub}>insights</span>
-      </div>
-    </div>
-  );
-
   return (
     <div style={styles.container}>
       <div style={styles.loginCard}>
         <div style={styles.header}>
-          <LiveInsightsLogo />
+          <img
+            src={logoLight}
+            alt="Live Insights Logo"
+            style={styles.logoImage}
+          />
           <h1 style={styles.welcomeText}>Bem-vindo de volta</h1>
           <p style={styles.subtitle}>Entre na sua conta para continuar</p>
         </div>
@@ -150,10 +141,16 @@ const styles = {
     boxSizing: 'border-box', // Adicionado para incluir padding no cálculo
     margin: 0, // Garantir margin 0
   },
+  logoImage: {
+    width: '140px',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
   loginCard: {
     width: '100%',
     maxWidth: '420px',
-    backgroundColor: 'white',
+    backgroundColor: '#f4f7fe',
     borderRadius: '20px',
     padding: '40px 30px',
     boxShadow: '0 20px 40px rgba(0,0,0,0.1)',

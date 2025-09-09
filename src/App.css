@@ -4,7 +4,7 @@
   --primary: #FF5722; /* Laranja vibrante do login */
   --primary-dark: #E64A19; /* Laranja mais escuro */
   --secondary: #9C27B0; /* Roxo do gradiente */
-  --background: #F8FAFC; /* Fundo claro suave */
+  --background: #f4f7fe; /* Fundo claro suave */
   --card-bg: #FFFFFF; /* Branco para cards */
   --text: #1E293B; /* Texto escuro principal */
   --text-secondary: #64748B; /* Texto secundário */
@@ -586,7 +586,7 @@ hr {
 
 .start-btn:disabled,
 .stop-btn:disabled {
-  background-color: #ccc;
+  background-color: #f4f7fe;
   cursor: not-allowed;
 }
 
