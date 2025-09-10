@@ -104,87 +104,503 @@ const LiveDashboard = () => {
     }
   };
 
+  const handleLogout = () => {
+    // aqui você pode limpar token/localStorage e redirecionar
+    localStorage.clear();
+    navigate('/login');
+  };
+
+  const LiveInsightsLogo = () => (
+    <div style={styles.logoContainer}>
+      <div style={styles.logoIcon}>
+        <div style={styles.bar1}></div>
+        <div style={styles.bar2}></div>
+        <div style={styles.bar3}></div>
+      </div>
+      <div style={styles.logoText}>
+        <span style={styles.logoTextMain}>live</span>
+        <span style={styles.logoTextSub}>insights</span>
+      </div>
+    </div>
+  );
+
+  const PlusIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+
+  const EditIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" fill="currentColor"/>
+    </svg>
+  );
+
+  const TrashIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14zM10 11v6M14 11v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+
+  const TagIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <line x1="7" y1="7" x2="7.01" y2="7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+
   return (
-    <div className="layout">
-      <header className="header-top">
-        <div className="header-div">
-        <h2>Relatórios</h2>
-        <button className="input-button" onClick={() => setModalOpen(true)}>
-          {window.innerWidth <= 600 ? '+' : 'NOVA LIVE'}
-        </button>
+    <div style={styles.container}>
+      {/* Header */}
+      <header style={styles.header}>
+        <div style={styles.headerContent}>
+          <LiveInsightsLogo />
+          <div style={styles.headerRight}>
+            <h1 style={styles.pageTitle}>Relatórios</h1>
+            <button style={styles.addButton} onClick={() => setModalOpen(true)}>
+              <PlusIcon />
+              {window.innerWidth > 600 && <span>Nova Live</span>}
+            </button>
+            <button style={styles.logoutButton} onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
         </div>
       </header>
 
+      {/* Modal */}
       {modalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <button className="remove-button" onClick={() => setModalOpen(false)}>×</button>
+        <div style={styles.modalOverlay} onClick={(e) => e.target === e.currentTarget && setModalOpen(false)}>
+          <div style={styles.modal}>
+            <div style={styles.modalHeader}>
+              <h2 style={styles.modalTitle}>Nova Transmissão</h2>
+              <button style={styles.closeButton} onClick={() => setModalOpen(false)}>×</button>
+            </div>
 
-            <label>Título:</label>
-            <input value={title} onChange={(e) => setTitle(e.target.value)} />
+            <div style={styles.modalContent}>
+              <div style={styles.inputGroup}>
+                <label style={styles.label}>Título da Live</label>
+                <input 
+                  style={styles.input}
+                  placeholder="Digite o título da live"
+                  value={title} 
+                  onChange={(e) => setTitle(e.target.value)} 
+                />
+              </div>
 
-            <label>ID da Live:</label>
-            <input value={liveId} onChange={(e) => setLiveId(e.target.value)} />
+              <div style={styles.inputGroup}>
+                <label style={styles.label}>ID da Live</label>
+                <input 
+                  style={styles.input}
+                  placeholder="Ex: dQw4w9WgXcQ"
+                  value={liveId} 
+                  onChange={(e) => setLiveId(e.target.value)} 
+                />
+              </div>
 
-            <label>Tag:</label>
-            <select value={tagSelect} onChange={(e) => setTagSelect(e.target.value)}>
-              <option value="" disabled>Escolha uma tag</option>
-              {tags.map((tag) => (
-                <option key={tag} value={tag}>{tag}</option>
-              ))}
-              <option value="__new__">Criar nova tag...</option>
-            </select>
+              <div style={styles.inputGroup}>
+                <label style={styles.label}>Tag</label>
+                <select style={styles.select} value={tagSelect} onChange={(e) => setTagSelect(e.target.value)}>
+                  <option value="" disabled>Escolha uma tag</option>
+                  {tags.map((tag) => (
+                    <option key={tag} value={tag}>{tag}</option>
+                  ))}
+                  <option value="__new__">+ Criar nova tag</option>
+                </select>
+              </div>
 
-            {tagSelect === '__new__' && (
-              <input
-                placeholder="Insira nova tag"
-                value={newTag}
-                onChange={(e) => setNewTag(e.target.value)}
-              />
-            )}
+              {tagSelect === '__new__' && (
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Nova Tag</label>
+                  <input
+                    style={styles.input}
+                    placeholder="Digite o nome da nova tag"
+                    value={newTag}
+                    onChange={(e) => setNewTag(e.target.value)}
+                  />
+                </div>
+              )}
 
-            <button className="input-button" onClick={handleAddLive}>ADICIONAR</button>
+              <button style={styles.submitButton} onClick={handleAddLive}>
+                Adicionar Transmissão
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      <div>
-        {Object.entries(livesGrouped).map(([tag, lives]) => (
-          <div key={tag}>
-            <h3>{tag.toUpperCase()}</h3>
-            <div className="card-grid">
-              {lives.map((live) => (
-                <div
-                key={live.liveId}
-                className="live-card"
-                onClick={() => navigate(`${live.liveId}`)}
-              >
-                <img
-                  src={`https://img.youtube.com/vi/${live.liveId}/0.jpg`}
-                  alt="Thumbnail"
-                  className="live-thumbnail"
-                />
-              
-                <div className="live-info">
-                  <div>
-                    <strong>[{tag.toUpperCase()}]</strong> {live.title}
-                  </div>
-                  <small>{new Date(live.date || live.createdAt).toLocaleDateString()}</small>
-                </div>
-              
-                <div className="actions">
-                  <button onClick={(e) => { e.stopPropagation(); handleUpdateTag(live.liveId); }}>Tag</button>
-                  <button onClick={(e) => { e.stopPropagation(); handleEdit(live.liveId, live.title); }}>Editar</button>
-                  <button onClick={(e) => { e.stopPropagation(); handleDelete(live.liveId); }}>Apagar</button>
-                </div>
-              </div>              
-              ))}
+      {/* Main Content */}
+      <main style={styles.main}>
+        <div style={styles.content}>
+          {Object.entries(livesGrouped).length === 0 ? (
+            <div style={styles.emptyState}>
+              <div style={styles.emptyStateIcon}>📺</div>
+              <h3 style={styles.emptyStateTitle}>Nenhuma live encontrada</h3>
+              <p style={styles.emptyStateText}>Comece adicionando sua primeira transmissão</p>
             </div>
-          </div>
-        ))}
-      </div>
+          ) : (
+            Object.entries(livesGrouped).map(([tag, lives]) => (
+              <div key={tag} style={styles.section}>
+                <h2 style={styles.sectionTitle}>{tag.toUpperCase()}</h2>
+                <div style={styles.cardGrid}>
+                  {lives.map((live) => (
+                    <div
+                      key={live.liveId}
+                      style={styles.liveCard}
+                      onClick={() => navigate(`${live.liveId}`)}
+                      className="live-card"
+                    >
+                      <div style={styles.thumbnailContainer}>
+                        <img
+                          src={`https://img.youtube.com/vi/${live.liveId}/0.jpg`}
+                          alt="Thumbnail"
+                          style={styles.thumbnail}
+                          className="thumbnail"
+                          onError={(e) => {
+                            e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDMyMCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3Lnczb3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNGM0Y0RjYiLz4KPHBhdGggZD0iTTE0MCA4MEwxODAgMTAwTDE0MCAxMjBWODBaIiBmaWxsPSIjRDVEOUREIi8+Cjwvc3ZnPgo=';
+                          }}
+                        />
+                        <div style={styles.playOverlay} className="play-overlay">▶</div>
+                      </div>
+                      
+                      <div style={styles.cardContent}>
+                        <div style={styles.cardInfo}>
+                          <h3 style={styles.cardTitle}>
+                            <span style={styles.cardTag}>[{tag.toUpperCase()}]</span>
+                            {live.title}
+                          </h3>
+                          <p style={styles.cardDate}>
+                            {new Date(live.date || live.createdAt).toLocaleDateString('pt-BR')}
+                          </p>
+                        </div>
+
+                        <div style={styles.cardActions} onClick={(e) => e.stopPropagation()}>
+                          <button 
+                            style={styles.actionButton}
+                            className="action-button"
+                            onClick={(e) => { e.stopPropagation(); handleUpdateTag(live.liveId); }}
+                            title="Alterar tag"
+                          >
+                            <TagIcon />
+                          </button>
+                          <button 
+                            style={styles.actionButton}
+                            className="action-button"
+                            onClick={(e) => { e.stopPropagation(); handleEdit(live.liveId, live.title); }}
+                            title="Editar título"
+                          >
+                            <EditIcon />
+                          </button>
+                          <button 
+                            style={{...styles.actionButton, ...styles.deleteButton}}
+                            className="action-button delete-button"
+                            onClick={(e) => { e.stopPropagation(); handleDelete(live.liveId); }}
+                            title="Deletar live"
+                          >
+                            <TrashIcon />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </main>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    minHeight: '100vh',
+    background: 'linear-gradient(135deg, #FF5722 0%, #9C27B0 100%)',
+    fontFamily: "'Inter', sans-serif",
+  },
+  header: {
+    background: 'rgba(255, 255, 255, 0.95)',
+    backdropFilter: 'blur(10px)',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+    padding: '20px 0',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 999,
+  },
+  headerContent: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '0 20px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  logoIcon: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    gap: '4px',
+    padding: '8px',
+  },
+  bar1: { width: '6px', height: '20px', backgroundColor: '#FF5722', borderRadius: '3px' },
+  bar2: { width: '6px', height: '26px', backgroundColor: '#FF5722', borderRadius: '3px' },
+  bar3: { width: '6px', height: '16px', backgroundColor: '#FF5722', borderRadius: '3px' },
+  logoText: { display: 'flex', flexDirection: 'column', alignItems: 'flex-start' },
+  logoTextMain: { fontSize: '22px', fontWeight: '700', color: '#1E293B', lineHeight: '1' },
+  logoTextSub: { fontSize: '22px', fontWeight: '700', color: '#1E293B', lineHeight: '1' },
+  headerRight: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '20px',
+  },
+  pageTitle: {
+    fontSize: '28px',
+    fontWeight: '600',
+    color: '#1E293B',
+    margin: 0,
+  },
+  addButton: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '12px 20px',
+    fontSize: '14px',
+    fontWeight: '600',
+    color: 'white',
+    background: 'linear-gradient(135deg, #FF5722, #9C27B0)',
+    border: 'none',
+    borderRadius: '12px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 15px rgba(255,87,34,0.25)',
+  },
+  logoutButton: {
+    padding: '10px 16px',
+    fontSize: '14px',
+    fontWeight: '600',
+    color: 'white',
+    background: '#dc2626',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+  main: {
+    padding: '120px 0 40px',
+  },
+  content: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '0 20px',
+  },
+  section: {
+    marginBottom: '50px',
+  },
+  sectionTitle: {
+    fontSize: '24px',
+    fontWeight: '700',
+    color: 'white',
+    marginBottom: '20px',
+    textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  },
+  cardGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+    gap: '24px',
+  },
+  liveCard: {
+    background: 'white',
+    borderRadius: '16px',
+    overflow: 'hidden',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 8px 25px rgba(0,0,0,0.1)',
+  },
+  thumbnailContainer: {
+    position: 'relative',
+    width: '100%',
+    height: '180px',
+    overflow: 'hidden',
+    background: '#f3f4f6',
+  },
+  thumbnail: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    transition: 'transform 0.3s ease',
+  },
+  playOverlay: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '50px',
+    height: '50px',
+    borderRadius: '50%',
+    background: 'rgba(0,0,0,0.6)',
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '20px',
+    opacity: 0,
+    transition: 'opacity 0.3s ease',
+  },
+  cardContent: {
+    padding: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '120px',
+  },
+  cardInfo: {
+    marginBottom: '12px',
+  },
+  cardTitle: {
+    fontSize: '16px',
+    fontWeight: '600',
+    color: '#1E293B',
+    margin: '0 0 8px 0',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  },
+  cardTag: {
+    fontSize: '14px',
+    fontWeight: '500',
+    color: '#FF5722',
+  },
+  cardDate: {
+    fontSize: '13px',
+    color: '#64748B',
+    margin: 0,
+  },
+  cardActions: {
+    display: 'flex',
+    gap: '10px',
+    justifyContent: 'flex-end',
+  },
+  actionButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '36px',
+    height: '36px',
+    borderRadius: '10px',
+    border: 'none',
+    cursor: 'pointer',
+    background: '#f1f5f9',
+    color: '#1E293B',
+    transition: 'all 0.2s ease',
+  },
+  deleteButton: {
+    background: '#fee2e2',
+    color: '#dc2626',
+  },
+  emptyState: {
+    textAlign: 'center',
+    padding: '60px 20px',
+    color: 'white',
+  },
+  emptyStateIcon: {
+    fontSize: '48px',
+    marginBottom: '20px',
+  },
+  emptyStateTitle: {
+    fontSize: '22px',
+    fontWeight: '600',
+    marginBottom: '10px',
+  },
+  emptyStateText: {
+    fontSize: '15px',
+    color: 'rgba(255,255,255,0.8)',
+  },
+  modalOverlay: {
+    position: 'fixed',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+  },
+  modal: {
+    background: 'white',
+    borderRadius: '20px',
+    padding: '24px',
+    width: '100%',
+    maxWidth: '500px',
+    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+    animation: 'fadeIn 0.3s ease',
+  },
+  modalHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '20px',
+  },
+  modalTitle: {
+    fontSize: '20px',
+    fontWeight: '600',
+    margin: 0,
+  },
+  closeButton: {
+    background: 'none',
+    border: 'none',
+    fontSize: '24px',
+    cursor: 'pointer',
+    color: '#64748B',
+  },
+  modalContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  },
+  inputGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+  },
+  label: {
+    fontSize: '14px',
+    fontWeight: '500',
+    color: '#1E293B',
+  },
+  input: {
+    padding: '12px',
+    borderRadius: '10px',
+    border: '1px solid #E2E8F0',
+    fontSize: '14px',
+    outline: 'none',
+    transition: 'border-color 0.2s ease',
+  },
+  select: {
+    padding: '12px',
+    borderRadius: '10px',
+    border: '1px solid #E2E8F0',
+    fontSize: '14px',
+    outline: 'none',
+  },
+  submitButton: {
+    padding: '14px',
+    borderRadius: '12px',
+    border: 'none',
+    fontSize: '15px',
+    fontWeight: '600',
+    color: 'white',
+    background: 'linear-gradient(135deg, #FF5722, #9C27B0)',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 15px rgba(156,39,176,0.25)',
+  },
 };
 
 export default LiveDashboard;

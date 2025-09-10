@@ -8,7 +8,7 @@
   --card-bg: #FFFFFF; /* Branco para cards */
   --text: #1E293B; /* Texto escuro principal */
   --text-secondary: #64748B; /* Texto secundário */
-  --border: #E2E8F0; /* Bordas suaves */
+
   --error: #EF4444; /* Vermelho para erros */
   --success: #10B981; /* Verde para sucesso */
   --radius: 0.75rem; /* Bordas mais arredondadas como no login */
@@ -87,8 +87,7 @@
 }
 
 body {
-  background-color: var(--background);
-  color: var(--text);
+  background: linear-gradient(135deg, #FF5722 0%, #9C27B0 100%);
   line-height: 1.6;
   display: flex;
   flex-direction: column;
@@ -118,7 +117,7 @@ h6 {
   margin-top: 1.875rem;
   margin-bottom: 1.25rem;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 2;
 }
 
 h1 {
@@ -128,7 +127,7 @@ h1 {
 
 h2 {
   font-size: 1.875rem;
-  margin-top: 3.75rem;
+  margin-top: 6.5rem;
   letter-spacing: -0.025em;
 }
 
@@ -156,7 +155,7 @@ a:hover {
   width: 100%;
   max-width: 1000px;
   margin: 2.5rem auto;
-  padding: 1.5rem;
+  
   background-color: var(--card-bg);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -177,7 +176,6 @@ form {
 input,
 select,
 button {
-  width: 100%;
   padding: 0.75rem 1rem;
   border-radius: var(--radius);
   font-size: 0.875rem;

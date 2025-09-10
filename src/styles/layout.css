@@ -4,6 +4,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    background: linear-gradient(135deg, #FF5722 0%, #9C27B0 100%);
   }
   
   .flex {
