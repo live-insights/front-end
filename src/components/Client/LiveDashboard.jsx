@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import HeaderTop from '../../components/HeaderTop';
 
 import {
   fetchTags,
@@ -104,26 +105,6 @@ const LiveDashboard = () => {
     }
   };
 
-  const LiveInsightsLogo = () => (
-    <div style={styles.logoContainer}>
-      <div style={styles.logoIcon}>
-        <div style={styles.bar1}></div>
-        <div style={styles.bar2}></div>
-        <div style={styles.bar3}></div>
-      </div>
-      <div style={styles.logoText}>
-        <span style={styles.logoTextMain}>live</span>
-        <span style={styles.logoTextSub}>insights</span>
-      </div>
-    </div>
-  );
-
-  const PlusIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
-
   const EditIcon = () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -146,18 +127,7 @@ const LiveDashboard = () => {
 
   return (
     <div className="layout" style={styles.container}>
-      <header className="header-top" style={styles.header}>
-        <div className="header-div" style={styles.headerContent}>
-          <LiveInsightsLogo />
-          <div style={styles.headerRight}>
-            <h2 style={styles.pageTitle}>Relatórios</h2>
-            <button className="input-button" style={styles.addButton} onClick={() => setModalOpen(true)}>
-              <PlusIcon />
-              {window.innerWidth > 600 && <span>Nova Live</span>}
-            </button>
-          </div>
-        </div>
-      </header>
+      <HeaderTop onAddLiveClick={() => setModalOpen(true)} />
 
       {modalOpen && (
         <div className="modal" style={styles.modalOverlay} onClick={(e) => e.target === e.currentTarget && setModalOpen(false)}>
@@ -301,79 +271,6 @@ const styles = {
     minHeight: '100vh',
     background: 'linear-gradient(135deg, #FF5722 0%, #9C27B0 100%)',
     fontFamily: "'Inter', sans-serif",
-  },
-  header: {
-    background: 'rgba(255, 255, 255, 0.95)',
-    backdropFilter: 'blur(10px)',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-    padding: '20px 0',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 999,
-  },
-  headerContent: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '0 20px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  logoContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-  },
-  logoIcon: {
-    display: 'flex',
-    alignItems: 'flex-end',
-    gap: '4px',
-    padding: '8px',
-  },
-  bar1: { width: '6px', height: '20px', backgroundColor: '#FF5722', borderRadius: '3px' },
-  bar2: { width: '6px', height: '26px', backgroundColor: '#FF5722', borderRadius: '3px' },
-  bar3: { width: '6px', height: '16px', backgroundColor: '#FF5722', borderRadius: '3px' },
-  logoText: { display: 'flex', flexDirection: 'column', alignItems: 'flex-start' },
-  logoTextMain: { fontSize: '22px', fontWeight: '700', color: '#1E293B', lineHeight: '1' },
-  logoTextSub: { fontSize: '22px', fontWeight: '700', color: '#1E293B', lineHeight: '1' },
-  headerRight: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px',
-  },
-  pageTitle: {
-    fontSize: '28px',
-    fontWeight: '600',
-    color: '#1E293B',
-    margin: 0,
-  },
-  addButton: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    padding: '12px 20px',
-    fontSize: '14px',
-    fontWeight: '600',
-    color: 'white',
-    background: 'linear-gradient(135deg, #FF5722, #9C27B0)',
-    border: 'none',
-    borderRadius: '12px',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    boxShadow: '0 4px 15px rgba(255,87,34,0.25)',
-  },
-  logoutButton: {
-    padding: '10px 16px',
-    fontSize: '14px',
-    fontWeight: '600',
-    color: 'white',
-    background: '#dc2626',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
   },
   main: {
     padding: '120px 0 40px',
@@ -570,5 +467,6 @@ const styles = {
     boxShadow: '0 4px 15px rgba(156,39,176,0.25)',
   },
 };
+
 
 export default LiveDashboard;
