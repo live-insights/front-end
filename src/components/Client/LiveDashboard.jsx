@@ -126,7 +126,7 @@ const LiveDashboard = () => {
   );
 
   return (
-    <div className="layout" style={styles.container}>
+    <div>
       <HeaderTop onAddLiveClick={() => setModalOpen(true)} />
 
       {modalOpen && (

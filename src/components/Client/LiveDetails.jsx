@@ -24,7 +24,7 @@ const LiveDetails = () => {
   const mapApiStatus = (apiStatus) => {
     const statusMap = {
       'ATIVO': 'Ativo',
-      'INATIVO': 'Inativo', 
+      'INATIVO': 'Inativo',
       'FINALIZADO': 'Finalizado'
     };
     return statusMap[apiStatus] || 'Inativo';
@@ -74,11 +74,11 @@ const LiveDetails = () => {
       const interval = setInterval(() => {
         // Salvar posição do scroll antes de atualizar dados
         const scrollPos = window.scrollY;
-        
+
         // Recarregar os dados
         fetchLiveInfo();
         fetchCommentsData();
-        
+
         // Restaurar scroll após um pequeno delay
         setTimeout(() => {
           window.scrollTo(0, scrollPos);
@@ -108,10 +108,10 @@ const LiveDetails = () => {
       setStarting(true); // mostra spinner e desabilita botão
       const result = await startLive(liveId);
       alert(result);
-      
+
       // Recarregar dados da API para obter o status atualizado
       await fetchLiveInfo();
-      
+
     } catch (err) {
       console.error(err);
       alert("Erro ao iniciar a live.");
@@ -125,10 +125,10 @@ const LiveDetails = () => {
     try {
       const result = await stopLive();
       alert(result);
-      
+
       // Recarregar dados da API para obter o status atualizado
       await fetchLiveInfo();
-      
+
     } catch (err) {
       console.error(err);
       alert("Erro ao parar a live.");
@@ -151,21 +151,21 @@ const LiveDetails = () => {
   const buildSentimentChart = (comments) => {
     const ctx = document.getElementById("sentimentChart")?.getContext("2d");
     if (!ctx) return;
-    
+
     const counts = comments.reduce((acc, c) => {
       const s = c.sentiment || "Indefinido";
       acc[s] = (acc[s] || 0) + 1;
       return acc;
     }, {});
-    
+
     const data = {
       labels: Object.keys(counts).map(formatEnum),
-      datasets: [{ 
-        data: Object.values(counts), 
-        backgroundColor: ["#FFEB8A", "#F57C1F", "#F59A55"] 
+      datasets: [{
+        data: Object.values(counts),
+        backgroundColor: ["#FFEB8A", "#F57C1F", "#F59A55"]
       }]
     };
-    
+
     if (sentimentChart) {
       sentimentChart.data = data;
       sentimentChart.update();
@@ -179,27 +179,27 @@ const LiveDetails = () => {
   const buildTimelineChart = (comments) => {
     const ctx = document.getElementById("timelineChart")?.getContext("2d");
     if (!ctx) return;
-    
+
     const buckets = {}, positives = {}, negatives = {}, neutrals = {};
-    
+
     comments.forEach(c => {
       const time = new Date(c.commentsDetailsData?.commentTimeStamp);
       const key = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       const sentiment = c.sentiment?.toLowerCase();
-      
+
       buckets[key] = (buckets[key] || 0) + 1;
       if (sentiment === "positivo") positives[key] = (positives[key] || 0) + 1;
       else if (sentiment === "negativo") negatives[key] = (negatives[key] || 0) + 1;
       else neutrals[key] = (neutrals[key] || 0) + 1;
     });
-    
+
     const labels = Array.from(new Set([
-      ...Object.keys(buckets), 
-      ...Object.keys(positives), 
-      ...Object.keys(negatives), 
+      ...Object.keys(buckets),
+      ...Object.keys(positives),
+      ...Object.keys(negatives),
       ...Object.keys(neutrals)
     ])).sort();
-    
+
     const data = {
       labels,
       datasets: [
@@ -209,15 +209,15 @@ const LiveDetails = () => {
         { label: "Neutros", data: labels.map(k => neutrals[k] || 0), borderColor: "#FFAB00", fill: false }
       ]
     };
-    
+
     if (timelineChart) {
       timelineChart.data = data;
       timelineChart.update();
     } else {
-      const newChart = new Chart(ctx, { 
-        type: "line", 
-        data, 
-        options: { responsive: true } 
+      const newChart = new Chart(ctx, {
+        type: "line",
+        data,
+        options: { responsive: true }
       });
       setTimelineChart(newChart);
     }
@@ -227,21 +227,21 @@ const LiveDetails = () => {
   const buildInteractionChart = (comments) => {
     const ctx = document.getElementById("interactionChart")?.getContext("2d");
     if (!ctx) return;
-    
+
     const types = comments.reduce((acc, c) => {
       const type = c.interaction || "Outro";
       acc[type] = (acc[type] || 0) + 1;
       return acc;
     }, {});
-    
+
     const data = {
       labels: Object.keys(types).map(formatEnum),
-      datasets: [{ 
-        data: Object.values(types), 
-        backgroundColor: "#F57C1F" 
+      datasets: [{
+        data: Object.values(types),
+        backgroundColor: "#F57C1F"
       }]
     };
-    
+
     if (interactionChart) {
       interactionChart.data = data;
       interactionChart.update();
@@ -259,7 +259,7 @@ const LiveDetails = () => {
   if (!live) return <div>Carregando live...</div>;
 
   return (
-    <div className="live-details">
+    <div className="live-details" style={styles.liveDetails}>
       <header>
         <h2>[{live.tag?.name || "Sem Tag"}] {live.title}</h2>
         <p>ID: {liveId} | Status: {status} | Comentários: {comments.length}</p>
@@ -350,32 +350,87 @@ const LiveDetails = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <div>
-        <table className="comments-table">
-          <thead>
-            <tr>
-              <th>Horário</th>
-              <th>Autor</th>
-              <th>Comentário</th>
-              <th>Sentimento</th>
-              <th>Interação</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredComments.map((c, idx) => (
-              <tr key={idx}>
-                <td>{new Date(c.commentsDetailsData?.commentTimeStamp).toLocaleTimeString()}</td>
-                <td>{c.authorDetailsData?.userDisplayName}</td>
-                <td>{c.commentsDetailsData?.commentContent}</td>
-                <td>{formatEnum(c.sentiment)}</td>
-                <td>{formatEnum(c.interaction)}</td>
+          <table style={styles.commentsTable}>
+            <thead>
+              <tr>
+                <th style={styles.th}>Horário</th>
+                <th style={styles.th}>Autor</th>
+                <th style={styles.th}>Comentário</th>
+                <th style={styles.th}>Sentimento</th>
+                <th style={styles.th}>Interação</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredComments.map((c, idx) => {
+                const baseColor = idx % 2 === 0 ? 'white' : '#fff7e6';
+                return (
+                  <tr
+                    key={idx}
+                    style={{
+                      backgroundColor: baseColor,
+                      transition: 'background-color 0.3s',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#ffe9cc';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = baseColor;
+                    }}
+                  >
+                    <td style={styles.td}>
+                      {new Date(c.commentsDetailsData?.commentTimeStamp).toLocaleTimeString()}
+                    </td>
+                    <td style={styles.td}>{c.authorDetailsData?.userDisplayName}</td>
+                    <td style={styles.td}>{c.commentsDetailsData?.commentContent}</td>
+                    <td style={styles.td}>{formatEnum(c.sentiment)}</td>
+                    <td style={styles.td}>{formatEnum(c.interaction)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+
+
         </div>
       </section>
     </div>
   );
 };
+
+const styles = {
+  liveDetails: {
+    background: 'white',
+    borderRadius: '16px',
+    overflow: 'hidden',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 8px 25px rgba(0,0,0,0.1)',
+    color: 'black',
+    padding: '20px',
+  },
+  commentsTable: {
+    width: '100%',
+    marginTop: '70px',
+    borderCollapse: 'separate',
+    borderSpacing: 0,
+    border: '1px solid #f59a55',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+  },
+  th: {
+    backgroundColor: '#fff3db',
+    color: '#333',
+    textAlign: 'left',
+    padding: '12px 15px',
+    borderBottom: '2px solid #f57c1f',
+  },
+  td: {
+    padding: '12px 15px',
+    borderBottom: '1px solid #ffe0b3',
+    color: '#555',
+  },
+};
+
 
 export default LiveDetails;
