@@ -69,13 +69,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 }
 
 .header-div, .actions {
   width: 100%;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 }
 
 * {
@@ -98,6 +98,7 @@ body {
   min-height: 100vh;
   font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  
 }
 
 div#root {
@@ -176,7 +177,7 @@ form {
 input,
 select,
 button {
-  padding: 0.75rem 1rem;
+ 
   border-radius: var(--radius);
   font-size: 0.875rem;
   margin: 0.3125rem auto;
@@ -282,7 +283,7 @@ p {
 }
 
 .logout-button {
-  position: fixed;
+  
   top: 1.25rem;
   right: 1.25rem;
   background-color: var(--error);

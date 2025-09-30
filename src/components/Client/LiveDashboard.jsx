@@ -104,12 +104,6 @@ const LiveDashboard = () => {
     }
   };
 
-  const handleLogout = () => {
-    // aqui você pode limpar token/localStorage e redirecionar
-    localStorage.clear();
-    navigate('/login');
-  };
-
   const LiveInsightsLogo = () => (
     <div style={styles.logoContainer}>
       <div style={styles.logoIcon}>
@@ -151,31 +145,26 @@ const LiveDashboard = () => {
   );
 
   return (
-    <div style={styles.container}>
-      {/* Header */}
-      <header style={styles.header}>
-        <div style={styles.headerContent}>
+    <div className="layout" style={styles.container}>
+      <header className="header-top" style={styles.header}>
+        <div className="header-div" style={styles.headerContent}>
           <LiveInsightsLogo />
           <div style={styles.headerRight}>
-            <h1 style={styles.pageTitle}>Relatórios</h1>
-            <button style={styles.addButton} onClick={() => setModalOpen(true)}>
+            <h2 style={styles.pageTitle}>Relatórios</h2>
+            <button className="input-button" style={styles.addButton} onClick={() => setModalOpen(true)}>
               <PlusIcon />
               {window.innerWidth > 600 && <span>Nova Live</span>}
-            </button>
-            <button style={styles.logoutButton} onClick={handleLogout}>
-              Logout
             </button>
           </div>
         </div>
       </header>
 
-      {/* Modal */}
       {modalOpen && (
-        <div style={styles.modalOverlay} onClick={(e) => e.target === e.currentTarget && setModalOpen(false)}>
-          <div style={styles.modal}>
+        <div className="modal" style={styles.modalOverlay} onClick={(e) => e.target === e.currentTarget && setModalOpen(false)}>
+          <div className="modal-content" style={styles.modal}>
             <div style={styles.modalHeader}>
               <h2 style={styles.modalTitle}>Nova Transmissão</h2>
-              <button style={styles.closeButton} onClick={() => setModalOpen(false)}>×</button>
+              <button className="remove-button" style={styles.closeButton} onClick={() => setModalOpen(false)}>×</button>
             </div>
 
             <div style={styles.modalContent}>
@@ -222,7 +211,7 @@ const LiveDashboard = () => {
                 </div>
               )}
 
-              <button style={styles.submitButton} onClick={handleAddLive}>
+              <button className="input-button" style={styles.submitButton} onClick={handleAddLive}>
                 Adicionar Transmissão
               </button>
             </div>
@@ -230,7 +219,6 @@ const LiveDashboard = () => {
         </div>
       )}
 
-      {/* Main Content */}
       <main style={styles.main}>
         <div style={styles.content}>
           {Object.entries(livesGrouped).length === 0 ? (
@@ -242,66 +230,60 @@ const LiveDashboard = () => {
           ) : (
             Object.entries(livesGrouped).map(([tag, lives]) => (
               <div key={tag} style={styles.section}>
-                <h2 style={styles.sectionTitle}>{tag.toUpperCase()}</h2>
-                <div style={styles.cardGrid}>
+                <h3 style={styles.sectionTitle}>{tag.toUpperCase()}</h3>
+                <div className="card-grid" style={styles.cardGrid}>
                   {lives.map((live) => (
                     <div
                       key={live.liveId}
+                      className="live-card"
                       style={styles.liveCard}
                       onClick={() => navigate(`${live.liveId}`)}
-                      className="live-card"
                     >
                       <div style={styles.thumbnailContainer}>
                         <img
                           src={`https://img.youtube.com/vi/${live.liveId}/0.jpg`}
                           alt="Thumbnail"
+                          className="live-thumbnail"
                           style={styles.thumbnail}
-                          className="thumbnail"
                           onError={(e) => {
                             e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDMyMCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3Lnczb3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNGM0Y0RjYiLz4KPHBhdGggZD0iTTE0MCA4MEwxODAgMTAwTDE0MCAxMjBWODBaIiBmaWxsPSIjRDVEOUREIi8+Cjwvc3ZnPgo=';
                           }}
                         />
                         <div style={styles.playOverlay} className="play-overlay">▶</div>
                       </div>
-                      
-                      <div style={styles.cardContent}>
+                    
+                      <div className="live-info" style={styles.cardContent}>
                         <div style={styles.cardInfo}>
-                          <h3 style={styles.cardTitle}>
-                            <span style={styles.cardTag}>[{tag.toUpperCase()}]</span>
-                            {live.title}
-                          </h3>
-                          <p style={styles.cardDate}>
-                            {new Date(live.date || live.createdAt).toLocaleDateString('pt-BR')}
-                          </p>
+                          <div>
+                            <strong>[{tag.toUpperCase()}]</strong> {live.title}
+                          </div>
+                          <small style={styles.cardDate}>{new Date(live.date || live.createdAt).toLocaleDateString()}</small>
                         </div>
-
-                        <div style={styles.cardActions} onClick={(e) => e.stopPropagation()}>
+                      
+                        <div className="actions" style={styles.cardActions} onClick={(e) => e.stopPropagation()}>
                           <button 
-                            style={styles.actionButton}
-                            className="action-button"
                             onClick={(e) => { e.stopPropagation(); handleUpdateTag(live.liveId); }}
+                            style={styles.actionButton}
                             title="Alterar tag"
                           >
                             <TagIcon />
                           </button>
                           <button 
-                            style={styles.actionButton}
-                            className="action-button"
                             onClick={(e) => { e.stopPropagation(); handleEdit(live.liveId, live.title); }}
+                            style={styles.actionButton}
                             title="Editar título"
                           >
                             <EditIcon />
                           </button>
                           <button 
-                            style={{...styles.actionButton, ...styles.deleteButton}}
-                            className="action-button delete-button"
                             onClick={(e) => { e.stopPropagation(); handleDelete(live.liveId); }}
+                            style={{...styles.actionButton, ...styles.deleteButton}}
                             title="Deletar live"
                           >
                             <TrashIcon />
                           </button>
                         </div>
-                      </div>
+                      </div>              
                     </div>
                   ))}
                 </div>
@@ -463,20 +445,6 @@ const styles = {
   },
   cardInfo: {
     marginBottom: '12px',
-  },
-  cardTitle: {
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#1E293B',
-    margin: '0 0 8px 0',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-  },
-  cardTag: {
-    fontSize: '14px',
-    fontWeight: '500',
-    color: '#FF5722',
   },
   cardDate: {
     fontSize: '13px',
