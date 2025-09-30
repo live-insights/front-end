@@ -332,14 +332,26 @@ const LiveDetails = () => {
           <canvas id="sentimentChart" style={{ display: "none" }} />
         </div>
 
-        <div className="nav-buttons">
-          <button onClick={() => setDashboardIndex((dashboardIndex - 1 + dashboards.length) % dashboards.length)}>
+        <div className="nav-buttons" style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '16px',
+          marginTop: '20px',
+        }}>
+          <button
+            style={styles.buttonStyle}
+            onClick={() => setDashboardIndex((dashboardIndex - 1 + dashboards.length) % dashboards.length)}
+          >
             Anterior
           </button>
-          <button onClick={() => setDashboardIndex((dashboardIndex + 1) % dashboards.length)}>
+          <button
+            style={styles.buttonStyle}
+            onClick={() => setDashboardIndex((dashboardIndex + 1) % dashboards.length)}
+          >
             Próximo
           </button>
         </div>
+
       </section>
 
       <section className="comments">
@@ -348,6 +360,17 @@ const LiveDetails = () => {
           placeholder="Buscar comentários..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '14px 20px',
+            fontSize: '16px',
+            borderRadius: '8px',
+            border: '2px solid #f59a55',
+            marginTop: '20px',
+            marginBottom: '20px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            outline: 'none',
+          }}
         />
         <div>
           <table style={styles.commentsTable}>
@@ -366,9 +389,11 @@ const LiveDetails = () => {
                 return (
                   <tr
                     key={idx}
+                    onClick={() => window.open(c.authorDetailsData?.channelUrl, '_blank', 'noopener,noreferrer')}
                     style={{
                       backgroundColor: baseColor,
                       transition: 'background-color 0.3s',
+                      cursor: 'pointer',
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = '#ffe9cc';
@@ -398,6 +423,21 @@ const LiveDetails = () => {
 };
 
 const styles = {
+  buttonStyle: {
+    padding: '14px 28px',
+    fontSize: '16px',
+    fontWeight: '600',
+    color: 'white',
+    background: 'linear-gradient(135deg, #FF5722, #9C27B0)',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s ease',
+    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
+  },
+  buttonHover: {
+    backgroundColor: '#e66d0c',
+  },
   liveDetails: {
     background: 'white',
     borderRadius: '16px',

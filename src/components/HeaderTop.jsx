@@ -11,56 +11,56 @@ const HeaderTop = ({ onAddLiveClick }) => {
 
   return (
     <header className="header-top" style={styles.header}>
-    <div className="header-div" style={styles.headerContent}>
+      <div className="header-div" style={styles.headerContent}>
         {/* Left side: Logo + Nova Live */}
         <div style={styles.logoSection}>
-        <div style={styles.logoContainer}>
+          <div style={styles.logoContainer}>
             <div style={styles.logoIcon}>
-            <div style={styles.bar1}></div>
-            <div style={styles.bar2}></div>
-            <div style={styles.bar3}></div>
+              <div style={styles.bar1}></div>
+              <div style={styles.bar2}></div>
+              <div style={styles.bar3}></div>
             </div>
             <div style={styles.logoText}>
-            <span style={styles.logoTextMain}>live</span>
-            <span style={styles.logoTextSub}>insights</span>
+              <span style={styles.logoTextMain}>live</span>
+              <span style={styles.logoTextSub}>insights</span>
             </div>
-        </div>
+          </div>
 
-        {/* Nova Live button - styled like nav link */}
-        {onAddLiveClick && (
+          {/* Nova Live button - styled like nav link */}
+          {onAddLiveClick && (
             <button
-            className="nova-live-button"
-            style={styles.novaLiveButton}
-            onClick={onAddLiveClick}
+              className="nova-live-button"
+              style={styles.novaLiveButton}
+              onClick={onAddLiveClick}
             >
-            Nova Live
+              Nova Live
             </button>
-        )}
+          )}
         </div>
 
         {/* Right side: Title + Nav buttons */}
         <div style={styles.headerRight}>
-        <h2 style={styles.pageTitle}>Relatórios</h2>
+          <h2 style={styles.pageTitle}>Relatórios</h2>
 
-        <div style={styles.navButtons}>
+          <div style={styles.navButtons}>
             <NavLink
-            to="/client/lives"
-            className={`nav-link ${isActiveRoute('/client/lives') ? 'active-link' : ''}`}
-            style={styles.navLink}
+              to="/client/lives"
+              className={`nav-link ${isActiveRoute('/client/lives') ? 'active-link' : ''}`}
+              style={styles.navLink}
             >
-            Dashboard
+              Dashboard
             </NavLink>
 
             <button
-            className="logout-button"
-            style={styles.logoutButton}
-            onClick={handleLogout}
+              className="logout-button"
+              style={styles.logoutButton}
+              onClick={handleLogout}
             >
-            Logout
+              Logout
             </button>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </header>
   );
 };
@@ -158,7 +158,7 @@ const styles = {
     alignItems: 'center',
     gap: '16px',
   },
-    novaLiveButton: {
+  novaLiveButton: {
     padding: '10px 16px',
     fontSize: '14px',
     fontWeight: '600',
@@ -172,7 +172,7 @@ const styles = {
     alignItems: 'center',
     boxShadow: '0 4px 15px rgba(255,87,34,0.25)',
     transition: 'all 0.3s ease',
-    },
+  },
 
 };
 

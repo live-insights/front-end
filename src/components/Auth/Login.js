@@ -136,7 +136,6 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     background: 'linear-gradient(135deg, #FF5722 0%, #9C27B0 100%)', // laranja para roxo
-    fontFamily: "'Inter', sans-serif",
     padding: '20px',
     boxSizing: 'border-box', // Adicionado para incluir padding no cálculo
     margin: 0, // Garantir margin 0
@@ -189,7 +188,6 @@ const styles = {
     borderRadius: '12px',
     outline: 'none',
     transition: 'all 0.3s ease',
-    fontFamily: 'inherit',
     boxSizing: 'border-box',
     color: '#1E293B',
   },
