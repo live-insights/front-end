@@ -173,6 +173,7 @@ const styles = {
     boxShadow: '0 4px 15px rgba(255,87,34,0.25)',
     transition: 'all 0.3s ease',
     },
+
 };
 
 export default HeaderTop;

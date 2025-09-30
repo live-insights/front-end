@@ -189,7 +189,6 @@ const LiveDashboard = () => {
         </div>
       )}
 
-      <main style={styles.main}>
         <div style={styles.content}>
           {Object.entries(livesGrouped).length === 0 ? (
             <div style={styles.emptyState}>
@@ -261,20 +260,11 @@ const LiveDashboard = () => {
             ))
           )}
         </div>
-      </main>
     </div>
   );
 };
 
 const styles = {
-  container: {
-    minHeight: '100vh',
-    background: 'linear-gradient(135deg, #FF5722 0%, #9C27B0 100%)',
-    fontFamily: "'Inter', sans-serif",
-  },
-  main: {
-    padding: '120px 0 40px',
-  },
   content: {
     maxWidth: '1200px',
     margin: '0 auto',

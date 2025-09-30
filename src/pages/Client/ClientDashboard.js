@@ -5,12 +5,14 @@ import HeaderTop from '../../components/HeaderTop';
 const ClientDashboard = () => {
 
   return (
-    <div className="layout">
+    <main>
       <HeaderTop />
+      <div className="layout">
       <main>
         <Outlet />
       </main>
     </div>
+    </main>
   );
 };
 

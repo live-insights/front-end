@@ -156,11 +156,9 @@ a:hover {
   width: 100%;
   max-width: 1000px;
   margin: 2.5rem auto;
-  
-  background-color: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
+  background: 'linear-gradient(135deg, #FF5722 0%, #9C27B0 100%)';
+  color: white;
+  margin-top: 8rem;
 }
 
 form {
