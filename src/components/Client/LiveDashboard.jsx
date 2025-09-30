@@ -286,6 +286,7 @@ const styles = {
     gap: '24px',
   },
   liveCard: {
+    paddingTop: '3rem',
     background: 'white',
     borderRadius: '16px',
     overflow: 'hidden',
@@ -328,20 +329,23 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '120px',
+    gap: '12px', // spacing between title and buttons
+    // height: 'auto', // remove fixed height
   },
   cardInfo: {
-    marginBottom: '12px',
-  },
-  cardDate: {
-    fontSize: '13px',
-    color: '#64748B',
-    margin: 0,
+    flexGrow: 1,
+    overflow: 'hidden',
   },
   cardActions: {
     display: 'flex',
     gap: '10px',
     justifyContent: 'flex-end',
+    flexWrap: 'wrap', 
+  },
+  cardDate: {
+    fontSize: '13px',
+    color: '#64748B',
+    margin: 0,
   },
   actionButton: {
     display: 'flex',
