@@ -176,52 +176,138 @@ const LiveDetails = () => {
   };
 
   // Construir gráfico de timeline
-  const buildTimelineChart = (comments) => {
-    const ctx = document.getElementById("timelineChart")?.getContext("2d");
-    if (!ctx) return;
+const buildTimelineChart = (comments) => {
+  const ctx = document.getElementById("timelineChart")?.getContext("2d");
+  if (!ctx) return;
 
-    const buckets = {}, positives = {}, negatives = {}, neutrals = {};
+  const buckets = {}, positives = {}, negatives = {}, neutrals = {};
 
-    comments.forEach(c => {
-      const time = new Date(c.commentsDetailsData?.commentTimeStamp);
-      const key = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const sentiment = c.sentiment?.toLowerCase();
+  comments.forEach(c => {
+    const time = new Date(c.commentsDetailsData?.commentTimeStamp);
+    const key = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const sentiment = c.sentiment?.toLowerCase();
 
-      buckets[key] = (buckets[key] || 0) + 1;
-      if (sentiment === "positivo") positives[key] = (positives[key] || 0) + 1;
-      else if (sentiment === "negativo") negatives[key] = (negatives[key] || 0) + 1;
-      else neutrals[key] = (neutrals[key] || 0) + 1;
-    });
+    buckets[key] = (buckets[key] || 0) + 1;
+    if (sentiment === "positivo") positives[key] = (positives[key] || 0) + 1;
+    else if (sentiment === "negativo") negatives[key] = (negatives[key] || 0) + 1;
+    else neutrals[key] = (neutrals[key] || 0) + 1;
+  });
 
-    const labels = Array.from(new Set([
-      ...Object.keys(buckets),
-      ...Object.keys(positives),
-      ...Object.keys(negatives),
-      ...Object.keys(neutrals)
-    ])).sort();
+  const labels = Array.from(new Set([
+    ...Object.keys(buckets),
+    ...Object.keys(positives),
+    ...Object.keys(negatives),
+    ...Object.keys(neutrals)
+  ])).sort();
 
-    const data = {
-      labels,
-      datasets: [
-        { label: "Total", data: labels.map(k => buckets[k] || 0), borderColor: "white", fill: false },
-        { label: "Positivos", data: labels.map(k => positives[k] || 0), borderColor: "#00C853", fill: false },
-        { label: "Negativos", data: labels.map(k => negatives[k] || 0), borderColor: "#D50000", fill: false },
-        { label: "Neutros", data: labels.map(k => neutrals[k] || 0), borderColor: "#FFAB00", fill: false }
-      ]
-    };
-
-    if (timelineChart) {
-      timelineChart.data = data;
-      timelineChart.update();
-    } else {
-      const newChart = new Chart(ctx, {
-        type: "line",
-        data,
-        options: { responsive: true }
-      });
-      setTimelineChart(newChart);
-    }
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Total",
+        data: labels.map(k => buckets[k] || 0),
+        borderColor: "#9C27B0",        // Roxo forte
+        backgroundColor: "#CE93D8",    // Roxo claro
+        fill: false,
+        borderWidth: 3,
+      },
+      {
+        label: "Positivos",
+        data: labels.map(k => positives[k] || 0),
+        borderColor: "#2196F3",        // Azul forte
+        backgroundColor: "#90CAF9",    // Azul claro
+        fill: false,
+        borderWidth: 2,
+      },
+      {
+        label: "Negativos",
+        data: labels.map(k => negatives[k] || 0),
+        borderColor: "#FF5722",        // Laranja forte
+        backgroundColor: "#FFAB91",    // Laranja claro
+        fill: false,
+        borderWidth: 2,
+      },
+      {
+        label: "Neutros",
+        data: labels.map(k => neutrals[k] || 0),
+        borderColor: "#607D8B",        // Azul acinzentado
+        backgroundColor: "#B0BEC5",    // Azul acinzentado claro
+        fill: false,
+        borderWidth: 2,
+      }
+    ]
   };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: "#333",
+          font: {
+            size: 13,
+            weight: "600",
+          },
+        },
+      },
+      title: {
+        display: true,
+        text: "Evolução dos Comentários ao Longo do Tempo",
+        color: "#9C27B0", // título em roxo
+        font: {
+          size: 18,
+          weight: "bold",
+        },
+        padding: { top: 10, bottom: 30 },
+      },
+      tooltip: {
+        backgroundColor: "#333",
+        titleColor: "#fff",
+        bodyColor: "#fff",
+        borderColor: "#9C27B0",
+        borderWidth: 1,
+      },
+    },
+    scales: {
+      x: {
+        grid: { color: "rgba(0,0,0,0.05)" },
+        ticks: {
+          color: "#444",
+          font: { size: 12 },
+        },
+      },
+      y: {
+        grid: { color: "rgba(0,0,0,0.1)" },
+        ticks: {
+          color: "#444",
+          font: { size: 12 },
+          stepSize: 1,
+        },
+      },
+    },
+    elements: {
+      line: {
+        tension: 0.35, // suaviza as linhas
+      },
+      point: {
+        radius: 4,
+        backgroundColor: "#fff",
+        borderWidth: 2,
+        hoverRadius: 6,
+      },
+    },
+  };
+
+  if (timelineChart) {
+    timelineChart.data = data;
+    timelineChart.options = options;
+    timelineChart.update();
+  } else {
+    const newChart = new Chart(ctx, { type: "line", data, options });
+    setTimelineChart(newChart);
+  }
+};
 
   // Construir gráfico de interação
   const buildInteractionChart = (comments) => {
