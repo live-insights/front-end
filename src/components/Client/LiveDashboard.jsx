@@ -128,16 +128,6 @@ const LiveDashboard = () => {
     </svg>
   );
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-  };
-
   const liveSliderSettings = {
     dots: false,
     infinite: false,
@@ -308,7 +298,8 @@ const styles = {
     overflow: 'hidden',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
-    boxShadow: '0 8px 25px rgba(0,0,0,0.1)'
+    boxShadow: '0 8px 25px rgba(0,0,0,0.1)',
+    height: '420px',
   },
   thumbnailContainer: {
     position: 'relative',
