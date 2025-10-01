@@ -2,7 +2,6 @@
 import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { Login, Register } from './components/Auth';
 import { AuthProvider } from './context/AuthContext';
-import { ThemeProvider } from "./context/ThemeContext"
 import PrivateRoute from './components/PrivateRoute';
 import ClientDashboard from './pages/Client/ClientDashboard';
 import LiveDashboard from './components/Client/LiveDashboard';
@@ -12,7 +11,6 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <ThemeProvider>
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
@@ -26,7 +24,6 @@ function App() {
             </Route>
           </Routes>
         </AuthProvider>
-      </ThemeProvider>
     </Router>
   );
 }
