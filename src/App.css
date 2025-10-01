@@ -16,55 +16,6 @@
   --gradient-primary: linear-gradient(135deg, #FF5722 0%, #9C27B0 100%);
 }
 
-/* Dark theme - cores que harmonizam com o gradiente */
-[data-theme="dark"] {
-  --primary: #FF6B47; /* Laranja mais suave para dark */
-  --primary-dark: #E64A19; /* Laranja escuro mantido */
-  --secondary: #AB47BC; /* Roxo mais claro para dark */
-  --background: #0F1419; /* Fundo muito escuro */
-  --card-bg: #1E2328; /* Cards escuros */
-  --text: #F1F5F9; /* Texto claro */
-  --text-secondary: #94A3B8; /* Texto secundário mais claro */
-  --border: #2D3748; /* Bordas escuras */
-  --error: #F56565; /* Vermelho mais suave */
-  --success: #48BB78; /* Verde mais suave */
-  --shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
-  --gradient-primary: linear-gradient(135deg, #FF6B47 0%, #AB47BC 100%);
-}
-
-/* Theme toggle button */
-.theme-toggle {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.theme-toggle:hover {
-  background: var(--gradient-primary);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-.theme-icon {
-  width: 22px;
-  height: 22px;
-}
-
 .header-top {
   display: flex;
   align-items: center;

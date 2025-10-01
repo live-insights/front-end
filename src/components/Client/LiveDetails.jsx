@@ -347,7 +347,7 @@ const buildTimelineChart = (comments) => {
   return (
     <div className="live-details" style={styles.liveDetails}>
       <header>
-        <h2>[{live.tag?.name || "Sem Tag"}] {live.title}</h2>
+        <h2 style={styles.text}>[{live.tag?.name || "Sem Tag"}] {live.title}</h2>
         <p>ID: {liveId} | Status: {status} | Comentários: {comments.length}</p>
 
         <div className="live-controls" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -456,6 +456,8 @@ const buildTimelineChart = (comments) => {
             marginBottom: '20px',
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
             outline: 'none',
+            background: 'white',
+            color: '#334155'
           }}
         />
         <div>
@@ -500,8 +502,6 @@ const buildTimelineChart = (comments) => {
               })}
             </tbody>
           </table>
-
-
         </div>
       </section>
     </div>
@@ -509,6 +509,9 @@ const buildTimelineChart = (comments) => {
 };
 
 const styles = {
+  text: {
+    color: '#334155'
+  },
   buttonStyle: {
     padding: '14px 28px',
     fontSize: '16px',

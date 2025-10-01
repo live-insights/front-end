@@ -223,7 +223,7 @@ const LiveDashboard = () => {
                     
                       <div className="live-info" style={styles.cardContent}>
                         <div style={styles.cardInfo}>
-                          <div>
+                          <div style={styles.cardInfo}>
                             <strong>[{tag.toUpperCase()}]</strong> {live.title}
                           </div>
                           <small style={styles.cardDate}>{new Date(live.date || live.createdAt).toLocaleDateString()}</small>
@@ -292,7 +292,7 @@ const styles = {
     overflow: 'hidden',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
-    boxShadow: '0 8px 25px rgba(0,0,0,0.1)',
+    boxShadow: '0 8px 25px rgba(0,0,0,0.1)'
   },
   thumbnailContainer: {
     position: 'relative',
@@ -335,6 +335,7 @@ const styles = {
   cardInfo: {
     flexGrow: 1,
     overflow: 'hidden',
+    color: '#334155'
   },
   cardActions: {
     display: 'flex',
