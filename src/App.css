@@ -8,7 +8,7 @@
   --card-bg: #FFFFFF; /* Branco para cards */
   --text: #1E293B; /* Texto escuro principal */
   --text-secondary: #64748B; /* Texto secundário */
-  --border: #E2E8F0; /* Bordas suaves */
+
   --error: #EF4444; /* Vermelho para erros */
   --success: #10B981; /* Verde para sucesso */
   --radius: 0.75rem; /* Bordas mais arredondadas como no login */
@@ -16,79 +16,31 @@
   --gradient-primary: linear-gradient(135deg, #FF5722 0%, #9C27B0 100%);
 }
 
-/* Dark theme - cores que harmonizam com o gradiente */
-[data-theme="dark"] {
-  --primary: #FF6B47; /* Laranja mais suave para dark */
-  --primary-dark: #E64A19; /* Laranja escuro mantido */
-  --secondary: #AB47BC; /* Roxo mais claro para dark */
-  --background: #0F1419; /* Fundo muito escuro */
-  --card-bg: #1E2328; /* Cards escuros */
-  --text: #F1F5F9; /* Texto claro */
-  --text-secondary: #94A3B8; /* Texto secundário mais claro */
-  --border: #2D3748; /* Bordas escuras */
-  --error: #F56565; /* Vermelho mais suave */
-  --success: #48BB78; /* Verde mais suave */
-  --shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
-  --gradient-primary: linear-gradient(135deg, #FF6B47 0%, #AB47BC 100%);
-}
-
-/* Theme toggle button */
-.theme-toggle {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.theme-toggle:hover {
-  background: var(--gradient-primary);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-.theme-icon {
-  width: 22px;
-  height: 22px;
-}
-
 .header-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 }
 
-.header-div, .actions {
+.header-div {
   width: 100%;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Inter", "Poppins", system-ui, sans-serif;
+
+  font-family: "Plus Jakarta Sans", "Inter", "Poppins", system-ui, sans-serif;
+  font-feature-settings: normal;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--text);
+  background: linear-gradient(135deg, #FF5722 0%, #9C27B0 100%);
   line-height: 1.6;
   display: flex;
   flex-direction: column;
@@ -99,6 +51,7 @@ body {
   min-height: 100vh;
   font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  
 }
 
 div#root {
@@ -118,7 +71,7 @@ h6 {
   margin-top: 1.875rem;
   margin-bottom: 1.25rem;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 2;
 }
 
 h1 {
@@ -128,7 +81,7 @@ h1 {
 
 h2 {
   font-size: 1.875rem;
-  margin-top: 3.75rem;
+  margin-top: 6.5rem;
   letter-spacing: -0.025em;
 }
 
@@ -154,13 +107,11 @@ a:hover {
 
 .layout {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 2.5rem auto;
-  padding: 1.5rem;
-  background-color: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
+  background: 'linear-gradient(135deg, #FF5722 0%, #9C27B0 100%)';
+  color: white;
+  margin-top: 8rem;
 }
 
 form {
@@ -177,8 +128,7 @@ form {
 input,
 select,
 button {
-  width: 100%;
-  padding: 0.75rem 1rem;
+ 
   border-radius: var(--radius);
   font-size: 0.875rem;
   margin: 0.3125rem auto;
@@ -284,7 +234,7 @@ p {
 }
 
 .logout-button {
-  position: fixed;
+  
   top: 1.25rem;
   right: 1.25rem;
   background-color: var(--error);
