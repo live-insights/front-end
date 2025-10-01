@@ -18,6 +18,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
     "react-scripts": "^5.0.1",
+    "react-select": "^5.10.2",
     "react-text-mask": "^5.5.0",
     "text-mask-addons": "^3.8.0"
   },

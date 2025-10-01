@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
 import { useParams } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 import { fetchLives, fetchComments, startLive, stopLive } from './api.js';
@@ -14,6 +15,10 @@ const LiveDetails = () => {
   const [timelineChart, setTimelineChart] = useState(null);
   const [interactionChart, setInteractionChart] = useState(null);
   const [dashboardIndex, setDashboardIndex] = useState(0);
+
+  // Filtros
+  const [sentimentFilter, setSentimentFilter] = useState([]);
+  const [interactionFilter, setInteractionFilter] = useState([]);
 
   // Estado para controlar se a live está iniciando (apenas UI feedback)
   const [starting, setStarting] = useState(false);
@@ -176,138 +181,138 @@ const LiveDetails = () => {
   };
 
   // Construir gráfico de timeline
-const buildTimelineChart = (comments) => {
-  const ctx = document.getElementById("timelineChart")?.getContext("2d");
-  if (!ctx) return;
+  const buildTimelineChart = (comments) => {
+    const ctx = document.getElementById("timelineChart")?.getContext("2d");
+    if (!ctx) return;
 
-  const buckets = {}, positives = {}, negatives = {}, neutrals = {};
+    const buckets = {}, positives = {}, negatives = {}, neutrals = {};
 
-  comments.forEach(c => {
-    const time = new Date(c.commentsDetailsData?.commentTimeStamp);
-    const key = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const sentiment = c.sentiment?.toLowerCase();
+    comments.forEach(c => {
+      const time = new Date(c.commentsDetailsData?.commentTimeStamp);
+      const key = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const sentiment = c.sentiment?.toLowerCase();
 
-    buckets[key] = (buckets[key] || 0) + 1;
-    if (sentiment === "positivo") positives[key] = (positives[key] || 0) + 1;
-    else if (sentiment === "negativo") negatives[key] = (negatives[key] || 0) + 1;
-    else neutrals[key] = (neutrals[key] || 0) + 1;
-  });
+      buckets[key] = (buckets[key] || 0) + 1;
+      if (sentiment === "positivo") positives[key] = (positives[key] || 0) + 1;
+      else if (sentiment === "negativo") negatives[key] = (negatives[key] || 0) + 1;
+      else neutrals[key] = (neutrals[key] || 0) + 1;
+    });
 
-  const labels = Array.from(new Set([
-    ...Object.keys(buckets),
-    ...Object.keys(positives),
-    ...Object.keys(negatives),
-    ...Object.keys(neutrals)
-  ])).sort();
+    const labels = Array.from(new Set([
+      ...Object.keys(buckets),
+      ...Object.keys(positives),
+      ...Object.keys(negatives),
+      ...Object.keys(neutrals)
+    ])).sort();
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Total",
-        data: labels.map(k => buckets[k] || 0),
-        borderColor: "#9C27B0",        // Roxo forte
-        backgroundColor: "#CE93D8",    // Roxo claro
-        fill: false,
-        borderWidth: 3,
-      },
-      {
-        label: "Positivos",
-        data: labels.map(k => positives[k] || 0),
-        borderColor: "#2196F3",        // Azul forte
-        backgroundColor: "#90CAF9",    // Azul claro
-        fill: false,
-        borderWidth: 2,
-      },
-      {
-        label: "Negativos",
-        data: labels.map(k => negatives[k] || 0),
-        borderColor: "#FF5722",        // Laranja forte
-        backgroundColor: "#FFAB91",    // Laranja claro
-        fill: false,
-        borderWidth: 2,
-      },
-      {
-        label: "Neutros",
-        data: labels.map(k => neutrals[k] || 0),
-        borderColor: "#607D8B",        // Azul acinzentado
-        backgroundColor: "#B0BEC5",    // Azul acinzentado claro
-        fill: false,
-        borderWidth: 2,
-      }
-    ]
-  };
+    const data = {
+      labels,
+      datasets: [
+        {
+          label: "Total",
+          data: labels.map(k => buckets[k] || 0),
+          borderColor: "#9C27B0",        // Roxo forte
+          backgroundColor: "#CE93D8",    // Roxo claro
+          fill: false,
+          borderWidth: 3,
+        },
+        {
+          label: "Positivos",
+          data: labels.map(k => positives[k] || 0),
+          borderColor: "#2196F3",        // Azul forte
+          backgroundColor: "#90CAF9",    // Azul claro
+          fill: false,
+          borderWidth: 2,
+        },
+        {
+          label: "Negativos",
+          data: labels.map(k => negatives[k] || 0),
+          borderColor: "#FF5722",        // Laranja forte
+          backgroundColor: "#FFAB91",    // Laranja claro
+          fill: false,
+          borderWidth: 2,
+        },
+        {
+          label: "Neutros",
+          data: labels.map(k => neutrals[k] || 0),
+          borderColor: "#607D8B",        // Azul acinzentado
+          backgroundColor: "#B0BEC5",    // Azul acinzentado claro
+          fill: false,
+          borderWidth: 2,
+        }
+      ]
+    };
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        labels: {
-          color: "#333",
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: {
+            color: "#333",
+            font: {
+              size: 13,
+              weight: "600",
+            },
+          },
+        },
+        title: {
+          display: true,
+          text: "Evolução dos Comentários ao Longo do Tempo",
+          color: "#9C27B0", // título em roxo
           font: {
-            size: 13,
-            weight: "600",
+            size: 18,
+            weight: "bold",
+          },
+          padding: { top: 10, bottom: 30 },
+        },
+        tooltip: {
+          backgroundColor: "#333",
+          titleColor: "#fff",
+          bodyColor: "#fff",
+          borderColor: "#9C27B0",
+          borderWidth: 1,
+        },
+      },
+      scales: {
+        x: {
+          grid: { color: "rgba(0,0,0,0.05)" },
+          ticks: {
+            color: "#444",
+            font: { size: 12 },
+          },
+        },
+        y: {
+          grid: { color: "rgba(0,0,0,0.1)" },
+          ticks: {
+            color: "#444",
+            font: { size: 12 },
+            stepSize: 1,
           },
         },
       },
-      title: {
-        display: true,
-        text: "Evolução dos Comentários ao Longo do Tempo",
-        color: "#9C27B0", // título em roxo
-        font: {
-          size: 18,
-          weight: "bold",
+      elements: {
+        line: {
+          tension: 0.35, // suaviza as linhas
         },
-        padding: { top: 10, bottom: 30 },
-      },
-      tooltip: {
-        backgroundColor: "#333",
-        titleColor: "#fff",
-        bodyColor: "#fff",
-        borderColor: "#9C27B0",
-        borderWidth: 1,
-      },
-    },
-    scales: {
-      x: {
-        grid: { color: "rgba(0,0,0,0.05)" },
-        ticks: {
-          color: "#444",
-          font: { size: 12 },
+        point: {
+          radius: 4,
+          backgroundColor: "#fff",
+          borderWidth: 2,
+          hoverRadius: 6,
         },
       },
-      y: {
-        grid: { color: "rgba(0,0,0,0.1)" },
-        ticks: {
-          color: "#444",
-          font: { size: 12 },
-          stepSize: 1,
-        },
-      },
-    },
-    elements: {
-      line: {
-        tension: 0.35, // suaviza as linhas
-      },
-      point: {
-        radius: 4,
-        backgroundColor: "#fff",
-        borderWidth: 2,
-        hoverRadius: 6,
-      },
-    },
-  };
+    };
 
-  if (timelineChart) {
-    timelineChart.data = data;
-    timelineChart.options = options;
-    timelineChart.update();
-  } else {
-    const newChart = new Chart(ctx, { type: "line", data, options });
-    setTimelineChart(newChart);
-  }
-};
+    if (timelineChart) {
+      timelineChart.data = data;
+      timelineChart.options = options;
+      timelineChart.update();
+    } else {
+      const newChart = new Chart(ctx, { type: "line", data, options });
+      setTimelineChart(newChart);
+    }
+  };
 
   // Construir gráfico de interação
   const buildInteractionChart = (comments) => {
@@ -338,9 +343,36 @@ const buildTimelineChart = (comments) => {
   };
 
   // Filtrar comentários pelo texto buscado
-  const filteredComments = comments.filter(c =>
-    c.commentsDetailsData?.commentContent?.toLowerCase().includes(search.toLowerCase())
-  );
+  const getUniqueOptions = (array, key) => {
+    const unique = Array.from(new Set(array.map(item => item[key])));
+    return unique
+      .filter(Boolean)
+      .map(val => ({ value: val, label: formatEnum(val) }));
+  };
+
+  const sentimentOptions = getUniqueOptions(comments, 'sentiment');
+  const interactionOptions = getUniqueOptions(comments, 'interaction');
+
+  const filteredComments = comments.filter(c => {
+    const contentMatch = c.commentsDetailsData?.commentContent?.toLowerCase().includes(search.toLowerCase());
+
+    const sentimentMatch =
+      sentimentFilter.length === 0 || sentimentFilter.map(f => f.value).includes(c.sentiment);
+
+    const interactionMatch =
+      interactionFilter.length === 0 || interactionFilter.map(f => f.value).includes(c.interaction);
+
+    return contentMatch && sentimentMatch && interactionMatch;
+  });
+
+
+  const toggleFilter = (value, filter, setFilter) => {
+    if (filter.includes(value)) {
+      setFilter(filter.filter(f => f !== value));
+    } else {
+      setFilter([...filter, value]);
+    }
+  };
 
   if (!live) return <div>Carregando live...</div>;
 
@@ -467,8 +499,34 @@ const buildTimelineChart = (comments) => {
                 <th style={styles.th}>Horário</th>
                 <th style={styles.th}>Autor</th>
                 <th style={styles.th}>Comentário</th>
-                <th style={styles.th}>Sentimento</th>
-                <th style={styles.th}>Interação</th>
+
+                <th style={styles.th}>
+                  <div style={{ minWidth: '180px' }}>
+                    <div style={styles.selectLabel}>Sentimento</div>
+                    <Select
+                      isMulti
+                      options={sentimentOptions}
+                      value={sentimentFilter}
+                      onChange={setSentimentFilter}
+                      placeholder="Todos"
+                      styles={styles}
+                    />
+                  </div>
+                </th>
+
+                <th style={styles.th}>
+                  <div style={{ minWidth: '180px' }}>
+                    <div style={styles.selectLabel}>Interação</div>
+                    <Select
+                      isMulti
+                      options={interactionOptions}
+                      value={interactionFilter}
+                      onChange={setInteractionFilter}
+                      placeholder="Todos"
+                      styles={styles}
+                    />
+                  </div>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -559,6 +617,34 @@ const styles = {
     borderBottom: '1px solid #ffe0b3',
     color: '#555',
   },
+  control: (base) => ({
+    ...base,
+    minHeight: '34px',
+    borderRadius: '6px',
+    borderColor: '#f59a55',
+    boxShadow: 'none',
+    fontSize: '13px',
+    cursor: 'pointer'
+  }),
+  menu: (base) => ({
+    ...base,
+    zIndex: 9999,
+  }),
+  multiValue: (base) => ({
+    ...base,
+    backgroundColor: '#ffe9cc',
+    color: '#000',
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: '#999',
+  }),
+  selectLabel: {
+    fontWeight: '600',
+    fontSize: '13px',
+    marginBottom: '6px',
+    color: '#334155',
+  }
 };
 
 
