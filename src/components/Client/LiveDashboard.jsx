@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderTop from '../../components/HeaderTop';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 import {
   fetchTags,
@@ -107,23 +110,55 @@ const LiveDashboard = () => {
 
   const EditIcon = () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" fill="currentColor"/>
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" fill="currentColor" />
     </svg>
   );
 
   const TrashIcon = () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14zM10 11v6M14 11v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14zM10 11v6M14 11v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 
   const TagIcon = () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <line x1="7" y1="7" x2="7.01" y2="7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="7" y1="7" x2="7.01" y2="7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
+  const liveSliderSettings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
 
   return (
     <div>
@@ -140,21 +175,21 @@ const LiveDashboard = () => {
             <div style={styles.modalContent}>
               <div style={styles.inputGroup}>
                 <label style={styles.label}>Título da Live</label>
-                <input 
+                <input
                   style={styles.input}
                   placeholder="Digite o título da live"
-                  value={title} 
-                  onChange={(e) => setTitle(e.target.value)} 
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
 
               <div style={styles.inputGroup}>
                 <label style={styles.label}>ID da Live</label>
-                <input 
+                <input
                   style={styles.input}
                   placeholder="Ex: dQw4w9WgXcQ"
-                  value={liveId} 
-                  onChange={(e) => setLiveId(e.target.value)} 
+                  value={liveId}
+                  onChange={(e) => setLiveId(e.target.value)}
                 />
               </div>
 
@@ -189,77 +224,58 @@ const LiveDashboard = () => {
         </div>
       )}
 
-        <div style={styles.content}>
-          {Object.entries(livesGrouped).length === 0 ? (
-            <div style={styles.emptyState}>
-              <div style={styles.emptyStateIcon}>📺</div>
-              <h3 style={styles.emptyStateTitle}>Nenhuma live encontrada</h3>
-              <p style={styles.emptyStateText}>Comece adicionando sua primeira transmissão</p>
-            </div>
-          ) : (
-            Object.entries(livesGrouped).map(([tag, lives]) => (
-              <div key={tag} style={styles.section}>
-                <h3 style={styles.sectionTitle}>{tag.toUpperCase()}</h3>
-                <div className="card-grid" style={styles.cardGrid}>
-                  {lives.map((live) => (
+      <div style={styles.content}>
+        {Object.entries(livesGrouped).length === 0 ? (
+          <div style={styles.emptyState}>
+            <div style={styles.emptyStateIcon}>📺</div>
+            <h3 style={styles.emptyStateTitle}>Nenhuma live encontrada</h3>
+            <p style={styles.emptyStateText}>Comece adicionando sua primeira transmissão</p>
+          </div>
+        ) : (
+          Object.entries(livesGrouped).map(([tag, lives]) => (
+            <div key={tag} style={styles.section}>
+              <h3 style={styles.sectionTitle}>{tag.toUpperCase()}</h3>
+              <Slider {...liveSliderSettings}>
+                {lives.map((live) => (
+                  <div key={live.liveId}>
                     <div
-                      key={live.liveId}
                       className="live-card"
-                      style={styles.liveCard}
+                      style={{ ...styles.liveCard, margin: '0 10px' }}
                       onClick={() => navigate(`${live.liveId}`)}
                     >
                       <div style={styles.thumbnailContainer}>
                         <img
                           src={`https://img.youtube.com/vi/${live.liveId}/0.jpg`}
                           alt="Thumbnail"
-                          className="live-thumbnail"
                           style={styles.thumbnail}
                           onError={(e) => {
-                            e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDMyMCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3Lnczb3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNGM0Y0RjYiLz4KPHBhdGggZD0iTTE0MCA4MEwxODAgMTAwTDE0MCAxMjBWODBaIiBmaWxsPSIjRDVEOUREIi8+Cjwvc3ZnPgo=';
+                            e.target.src = 'data:image/svg+xml;base64,...';
                           }}
                         />
-                        <div style={styles.playOverlay} className="play-overlay">▶</div>
+                        <div style={styles.playOverlay}>▶</div>
                       </div>
-                    
-                      <div className="live-info" style={styles.cardContent}>
+                      <div style={styles.cardContent}>
                         <div style={styles.cardInfo}>
-                          <div style={styles.cardInfo}>
-                            <strong>[{tag.toUpperCase()}]</strong> {live.title}
-                          </div>
-                          <small style={styles.cardDate}>{new Date(live.date || live.createdAt).toLocaleDateString()}</small>
+                          <strong>[{tag.toUpperCase()}]</strong> {live.title}
+                          <br />
+                          <small style={styles.cardDate}>
+                            {new Date(live.date || live.createdAt).toLocaleDateString()}
+                          </small>
                         </div>
-                      
-                        <div className="actions" style={styles.cardActions} onClick={(e) => e.stopPropagation()}>
-                          <button 
-                            onClick={(e) => { e.stopPropagation(); handleUpdateTag(live.liveId); }}
-                            style={styles.actionButton}
-                            title="Alterar tag"
-                          >
-                            <TagIcon />
-                          </button>
-                          <button 
-                            onClick={(e) => { e.stopPropagation(); handleEdit(live.liveId, live.title); }}
-                            style={styles.actionButton}
-                            title="Editar título"
-                          >
-                            <EditIcon />
-                          </button>
-                          <button 
-                            onClick={(e) => { e.stopPropagation(); handleDelete(live.liveId); }}
-                            style={{...styles.actionButton, ...styles.deleteButton}}
-                            title="Deletar live"
-                          >
-                            <TrashIcon />
-                          </button>
+                        <div style={styles.cardActions} onClick={(e) => e.stopPropagation()}>
+                          <button onClick={() => handleUpdateTag(live.liveId)} style={styles.actionButton}><TagIcon /></button>
+                          <button onClick={() => handleEdit(live.liveId, live.title)} style={styles.actionButton}><EditIcon /></button>
+                          <button onClick={() => handleDelete(live.liveId)} style={{ ...styles.actionButton, ...styles.deleteButton }}><TrashIcon /></button>
                         </div>
-                      </div>              
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+                  </div>
+                ))}
+              </Slider>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };
@@ -329,8 +345,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    gap: '12px', // spacing between title and buttons
-    // height: 'auto', // remove fixed height
+    gap: '12px', 
   },
   cardInfo: {
     flexGrow: 1,
@@ -341,7 +356,7 @@ const styles = {
     display: 'flex',
     gap: '10px',
     justifyContent: 'flex-end',
-    flexWrap: 'wrap', 
+    flexWrap: 'wrap',
   },
   cardDate: {
     fontSize: '13px',
