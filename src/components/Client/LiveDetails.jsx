@@ -616,6 +616,9 @@ const styles = {
     padding: '12px 15px',
     borderBottom: '1px solid #ffe0b3',
     color: '#555',
+    wordBreak: 'break-word',
+    whiteSpace: 'pre-wrap',  
+    maxWidth: '300px',  
   },
   control: (base) => ({
     ...base,
