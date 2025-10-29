@@ -159,9 +159,12 @@ const LiveDashboard = () => {
           <div className="modal-content" style={styles.modal}>
             <div style={styles.modalHeader}>
               <h2 style={styles.modalTitle}>Nova Transmissão</h2>
-              <button className="remove-button" style={styles.closeButton} onClick={() => setModalOpen(false)}>×</button>
+              <button
+              className="remove-button"
+              style={styles.closeButton}
+              onClick={() => setModalOpen(false)}
+            >×</button>
             </div>
-
             <div style={styles.modalContent}>
               <div style={styles.inputGroup}>
                 <label style={styles.label}>Título da Live</label>
@@ -336,7 +339,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    gap: '12px', 
+    gap: '12px',
   },
   cardInfo: {
     flexGrow: 1,
@@ -391,21 +394,30 @@ const styles = {
   },
   modalOverlay: {
     position: 'fixed',
-    top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1000,
+    zIndex: 9999,
+    padding: '20px',
+    boxSizing: 'border-box',
   },
   modal: {
-    background: 'white',
-    borderRadius: '20px',
-    padding: '24px',
+    backgroundColor: '#fff',
+    borderRadius: '16px',
     width: '100%',
     maxWidth: '500px',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-    animation: 'fadeIn 0.3s ease',
+    maxHeight: '90vh',
+    overflowY: 'auto',
+    padding: '24px 20px',
+    position: 'relative',
+    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)',
+    animation: 'fadeInUp 0.3s ease',
+    paddingLeft: '70px'
   },
   modalHeader: {
     display: 'flex',
