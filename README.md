@@ -4,7 +4,7 @@ Bem-vindo ao **Live Insights App**! 😎
 
 ## 🚀 Primeiros Passos 
 
-1. **Instale as dependências** 
+1. **Instale as dependências (Node.js <= 18)** 
 
    ```bash
    npm install
